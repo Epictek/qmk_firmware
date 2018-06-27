@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----+----|     |----+----+----+----+----+----+----|
      LSPO, Z  , X  , C  , V  , B  ,SPFN,      GBRC, N  , M  ,COMM,DOT ,SLSH,RSPC,
   //|----+----+----+----+----+----+----|     |----+----+----+----+----+----+----|
-                         NMPD,BSPC,                SPC ,SYMB
+                         NMPD, SPC,                BSPC,SYMB
   // \------------------+----+----+---/       \---+----+----+-------------------/
   ),
 
@@ -163,9 +163,15 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
   return MACRO_NONE;
 };
  
+uint8_t currentlayer = 0;
 
 void matrix_scan_user(void) {
     uint8_t layer = biton32(layer_state);
+
+    if (currentlayer != layer){
+       SEND_STRING("TOPKEK");
+       currentlayer = layer;
+    }
     
     switch (layer) {
     	case _QWERTY:
